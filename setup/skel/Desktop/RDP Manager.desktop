@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=RDP Manager
+Comment=
+Exec=/usr/local/bin/rdp_manager
+Icon=/usr/local/share/images/ITS-logo.jpg
+Path=
+Terminal=false
+StartupNotify=false
