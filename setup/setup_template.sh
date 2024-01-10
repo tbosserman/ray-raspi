@@ -1,12 +1,7 @@
 #!/bin/sh
 
 # Get WiFi up and running.
-ed /etc/default/crda <<EOF
-/^REGDOMAIN
-s/=.*\$/=US/
-w
-q
-EOF
+echo 'REGDOMAIN=US' > /etc/default/crda
 
 iw reg set US
 rfkill unblock 0
@@ -20,7 +15,7 @@ EOF
 
 locale-gen
 localectl set-locale en_US.UTF-8
-localectl set-keymap us
+#localectl set-keymap us
 localectl set-x11-keymap us pc105+inet terminate:ctrl_alt_bksp
 setupcon
 
@@ -66,15 +61,15 @@ apt-get install -y xfce4 xfce4-terminal xscreensaver freerdp2-x11 \
 # boot time. They will now get started once networking comes up.
 systemctl disable wpa_supplicant dhcpcd openntpd
 systemctl enable NetworkManager
-systemctl set-default graphical.target
+systemctl set-default graphical
 
 cd /root
 base64 --decode <<EOF | tar -xzf -
 EOF
 
-chmod 444 brcm*
-chown root:root brcm*
-mv brcm* /lib/firmware/brcm/.
+#chmod 444 brcm*
+#chown root:root brcm*
+#mv brcm* /lib/firmware/brcm/.
 
 mkdir -p /usr/local/share/images
 chown root:root ITS*.jpg rdp_manager.arm64 noip2.arm64 60-duc
@@ -101,14 +96,6 @@ mkdir skel
 cd skel
 tar -xzf /root/skeleton.tar.gz
 
-# Remove the "pi" user.
-deluser --remove-home pi
-rm /etc/sudoers.d/010_pi-nopasswd
-egrep '[:,]pi$|[:,]pi,' /etc/group | awk -F: '{print $1}' | while read groupname
-do
-    deluser pi $groupname
-done
-
 # Add an admin user and allow them to use sudo
 cd /root
 adduser --disabled-password --shell /bin/bash --gecos 'Admin User' admin
@@ -118,4 +105,4 @@ rm -f admin_password
 
 # Cleanup after ourselves
 cd /root
-rm setup.sh skeleton.tar.gz
+#rm setup.sh skeleton.tar.gz

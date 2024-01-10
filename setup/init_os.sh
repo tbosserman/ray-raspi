@@ -7,7 +7,8 @@ xz -dc $DIR/$IMG | dd of=$DEV bs=64K status=progress
 partprobe $DEV
 
 mount ${DEV}2 /mnt
-cp /home/tboss/ray-raspi/setup/{setup.sh,admin_password} /mnt/root/.
+cp /home/tboss/ray-raspi/setup/setup.sh /mnt/root/.
+cp /home/tboss/ray-raspi/setup/admin_password /mnt/root/.
 umount /mnt
 
 exit 0
