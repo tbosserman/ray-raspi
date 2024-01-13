@@ -102,8 +102,7 @@ cd /root
 adduser --disabled-password --shell /bin/bash --gecos 'Admin User' admin
 adduser admin sudo
 chpasswd -e < admin_password
-rm -f admin_password
 
 # Cleanup after ourselves
 cd /root
-rm setup.sh skeleton.tar.gz
+rm -f admin_password brcm* setup.sh skeleton.tar.gz setup.out
