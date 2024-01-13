@@ -55,7 +55,7 @@ sleep 10
 apt-get update
 apt-get dist-upgrade -y
 apt-get install -y xfce4 xfce4-terminal xscreensaver freerdp2-x11 \
-    network-manager-gnome network-manager 
+    network-manager-gnome network-manager lightdm
 
 # Disable wpa_supplicant, dhcpcd, and openntpd from starting at system
 # boot time. They will now get started once networking comes up.
@@ -72,7 +72,7 @@ EOF
 #mv brcm* /lib/firmware/brcm/.
 
 mkdir -p /usr/local/share/images
-chown root:root ITS*.jpg rdp_manager.arm64 noip2.arm64 60-duc
+chown root:root ITS*.jpg rdp_manager.arm64 noip2.arm64 60-duc 10-openntpd
 chmod 444 ITS*.jpg login-background-2.jpg
 chmod 755 rdp_manager.arm64 noip2.arm64 60-duc
 mv ITS*.jpg /usr/local/share/images/.
@@ -105,4 +105,4 @@ rm -f admin_password
 
 # Cleanup after ourselves
 cd /root
-#rm setup.sh skeleton.tar.gz
+rm setup.sh skeleton.tar.gz
