@@ -95,6 +95,7 @@ mv skel skel.orig
 mkdir skel
 cd skel
 tar -xzf /root/skeleton.tar.gz
+chown -R root:root /etc/skel
 
 # Add an admin user and allow them to use sudo
 cd /root
