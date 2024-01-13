@@ -1,1 +1,1 @@
-export XDG_DATA_DIRS=/usr/share/xfce4:/usr/local/share/:/usr/share/:~/.desktop
+export XDG_DATA_DIRS=/usr/share/xfce4:/usr/local/share/:/usr/share/:~/Desktop
