@@ -8,7 +8,6 @@ partprobe $DEV
 
 mount ${DEV}2 /mnt
 cp /home/tboss/ray-raspi/setup/setup.sh /mnt/root/.
-cp /home/tboss/ray-raspi/setup/admin_password /mnt/root/.
 umount /mnt
 
 exit 0
