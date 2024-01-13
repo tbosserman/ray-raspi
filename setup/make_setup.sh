@@ -8,3 +8,5 @@ ed setup.sh <<EOF
 w
 q
 EOF
+
+rm encoded
