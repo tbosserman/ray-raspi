@@ -1,0 +1,6 @@
+1. make_setup.sh
+2. init_os.sh
+3. Now boot the RaspberryPI and run /root/setup.sh
+4. Halt the PI and put the MicroSD card back in the computer
+5. unmount the MicroSD if it gets automounted
+6. make_image.sh
