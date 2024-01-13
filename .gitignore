@@ -1,2 +1,4 @@
 images/**
 *.tar.gz
+id_rsa*
+setup/admin_password
