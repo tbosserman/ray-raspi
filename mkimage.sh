@@ -1,11 +1,13 @@
 #!/bin/sh -ex
 
-if [ ! -f testimage ]
+IMAGE=image-$(date '+%Y%m%d')
+if [ ! -f $IMAGE ]
 then
-    touch testimage
-    embiggen testimage 7680M
+    # Create an empty file of size 7.5 GiB. The "seek=" below will make it
+    # a "sparse" file, so it won't actually use any space until we fill it.
+    dd if=/dev/zero of=$IMAGE bs=4096 seek=1966079 count=1
 
-    parted ./testimage <<EOF
+    parted $IMAGE <<EOF
     mklabel msdos
     mkpart primary fat32 8192s 1056767s
     mkpart primary ext4 1056768s 100%
@@ -13,7 +15,7 @@ then
 EOF
 fi
 
-LOOPDEV=$(sudo losetup --find --show $PWD/testimage)
+LOOPDEV=$(sudo losetup --find --show $PWD/$IMAGE)
 sudo partprobe $LOOPDEV
 sudo mke2fs -t ext4 -L rootfs ${LOOPDEV}p2
 
@@ -23,12 +25,6 @@ sudo mount ${LOOPDEV}p2 /mnt2
 sudo tar -cf - -C /mnt . 2>errors.1 | sudo tar -xf - -C /mnt2 2>errors.2
 sudo umount /mnt
 sudo mount ${LOOPDEV}p1 /mnt
-
-# Still todo:
-# 1. Use blkid to find the PARTUUIDs of the bootfs and rootfs
-# 2. Update cmdline.txt in bootfs
-# 3. Update fstab in rootfs
-# 4. Update /etc/fstab to use LABEL=rootfs and LABEL=bootfs
 
 eval $(sudo blkid -o export ${LOOPDEV}p2)
 echo PARTUUID=$PARTUUID
