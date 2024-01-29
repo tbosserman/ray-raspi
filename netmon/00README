@@ -1,0 +1,4 @@
+This directory contains a bunch of "test programs" I wrote when I was
+getting network monitoring to work in the rdp_manager program. It really
+doesn't belong here, but I don't want to delete it because I might find
+them useful again some day.
