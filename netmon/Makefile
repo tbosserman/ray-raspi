@@ -1,8 +1,10 @@
+CFLAGS=-g
+
+all: netmon mkquery
+
 netmon: netmon.o alltrim.o
 
-netmon.o: netmon.c
-
-alltrim.o: alltrim.c
+mkquery: mkquery.o ping_dns.o
 
 clean:
-	$(RM) *.o netmon
+	$(RM) *.o netmon mkquery
