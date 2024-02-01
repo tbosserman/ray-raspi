@@ -1,11 +1,11 @@
 #!/bin/sh -ex
 
-IMAGE=image-$(date '+%Y%m%d')
+IMAGE=golden-$(date '+%Y%m%d').img
 if [ ! -f $IMAGE ]
 then
     # Create an empty file of size 7.5 GiB. The "seek=" below will make it
     # a "sparse" file, so it won't actually use any space until we fill it.
-    dd if=/dev/zero of=$IMAGE bs=4096 seek=1966079 count=1
+    dd if=/dev/zero of=$IMAGE bs=1024 seek=7864319 count=1
 
     parted $IMAGE <<EOF
     mklabel msdos
