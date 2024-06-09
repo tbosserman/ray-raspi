@@ -1,0 +1,7 @@
+1. make_setup.sh
+2. Install the base debian with absolutely NOTHING!
+3. Reboot and login as root
+4. Somehow get setup.sh onto that debian install. Maybe USB stick?
+   I installed openssh-client and krb5-user so I could scp it.
+5. Reboot, login as root, and start adding users.
+6. Don't forget to configure noip2 (noip2 -c)
