@@ -20,7 +20,7 @@ then
     exit $S
 fi
 
-apt-get install openntpd -y
+apt-get install ed openntpd -y
 
 # Make nntpd set the time when it first starts no matter how far off
 # the time has drifted.
@@ -36,7 +36,7 @@ sleep 10
 apt-get update
 apt-get dist-upgrade -y
 apt-get install -y xfce4 xfce4-terminal xscreensaver freerdp2-x11 \
-    network-manager-gnome network-manager lightdm sudo ed
+    network-manager-gnome network-manager lightdm sudo
 
 # Disable wpa_supplicant, dhcpcd, and openntpd from starting at system
 # boot time. They will now get started once networking comes up.
@@ -87,4 +87,4 @@ chpasswd -e < admin_password
 
 # Cleanup after ourselves
 cd /root
-#rm -f admin_password setup.sh skeleton.tar.gz setup.out
+rm -f admin_password setup.sh skeleton.tar.gz *.deb
