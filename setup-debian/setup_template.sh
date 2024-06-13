@@ -45,11 +45,9 @@ systemctl enable NetworkManager
 systemctl set-default graphical
 
 # Comment out any non-loopback interfaces so NetworkMangler takes control
-ed /etc/network/interfaces <<EOF
-g/^iface  *[^l]/s/^/#/
-w
-q
-EOF
+f=/etc/network/interfaces
+mv $f $f.orig
+awk -f awkfile $f.orig > $f
 
 cd /root
 base64 --decode <<EOF | tar -xzf -
@@ -87,4 +85,4 @@ chpasswd -e < admin_password
 
 # Cleanup after ourselves
 cd /root
-rm -f admin_password setup.sh skeleton.tar.gz *.deb
+rm -f admin_password setup.sh skeleton.tar.gz *.deb awkfile
