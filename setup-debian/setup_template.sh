@@ -44,14 +44,14 @@ systemctl disable wpa_supplicant dhcpcd openntpd
 systemctl enable NetworkManager
 systemctl set-default graphical
 
+cd /root
+base64 --decode <<EOF | tar -xzf -
+EOF
+
 # Comment out any non-loopback interfaces so NetworkMangler takes control
 f=/etc/network/interfaces
 mv $f $f.orig
 awk -f awkfile $f.orig > $f
-
-cd /root
-base64 --decode <<EOF | tar -xzf -
-EOF
 
 apt-get install ./rdp_manager*.deb
 mkdir -p /usr/local/share/images
