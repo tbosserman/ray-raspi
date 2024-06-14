@@ -2,5 +2,6 @@ images/**
 *.tar.gz
 *.o
 id_rsa*
-setup/admin_password
-setup/setup.sh
+*.deb
+admin_password
+setup.sh
