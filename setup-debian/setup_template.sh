@@ -51,6 +51,8 @@ EOF
 # Comment out any non-loopback interfaces so NetworkMangler takes control
 f=/etc/network/interfaces
 mv $f $f.orig
+touch $f
+chmod 600 $f
 awk -f awkfile $f.orig > $f
 
 apt-get install ./rdp_manager*.deb
