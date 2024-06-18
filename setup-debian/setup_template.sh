@@ -84,11 +84,11 @@ awk -F: '$3 >= 1000 { print $1, $3 }' /etc/passwd | while read NAME xUID
 do
     [ "$NAME" = "admin" -o "$NAME" = "nobody" ] && continue
     echo "Deleting user $NAME"
-    userdel --remove-home "$NAME"
+    userdel -r "$NAME"
 done
 
 # Un-mute the default pulseaudio sink and set volume to 50%
-F=/etc/pulse/default.pa.d/60-unmute
+F=/etc/pulse/default.pa.d/60-unmute.pa
 echo set-link-mute @DEFAULT_SINK@ 0 > $F
 echo set-link-volume @DEFAULT_SINK@ 0x8000 >> $F
 
