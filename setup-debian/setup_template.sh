@@ -89,8 +89,8 @@ done
 
 # Un-mute the default pulseaudio sink and set volume to 50%
 F=/etc/pulse/default.pa.d/60-unmute.pa
-echo set-link-mute @DEFAULT_SINK@ 0 > $F
-echo set-link-volume @DEFAULT_SINK@ 0x8000 >> $F
+echo set-sink-mute @DEFAULT_SINK@ 0 > $F
+echo set-sink-volume @DEFAULT_SINK@ 0x8000 >> $F
 
 # Add an admin user and allow them to use sudo
 cd /root
