@@ -79,6 +79,19 @@ cd skel
 tar -xzf /root/skeleton.tar.gz
 chown -R root:root /etc/skel
 
+# Delete the user debian forced us to create during installation
+awk -F: '$3 >= 1000 { print $1, $3 }' /etc/passwd | while read NAME xUID
+do
+    [ "$NAME" = "admin" -o "$NAME" = "nobody" ] && continue
+    echo "Deleting user $NAME"
+    userdel --remove-home "$NAME"
+done
+
+# Un-mute the default pulseaudio sink and set volume to 50%
+F=/etc/pulse/default.pa.d/60-unmute
+echo set-link-mute @DEFAULT_SINK@ 0 > $F
+echo set-link-volume @DEFAULT_SINK@ 0x8000 >> $F
+
 # Add an admin user and allow them to use sudo
 cd /root
 adduser --disabled-password --shell /bin/bash --gecos 'Admin User' admin
