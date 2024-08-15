@@ -21,20 +21,34 @@ base64 --decode <<EOF | tar -xzf -
 EOF
 
 apt-get install ./rdp_manager*.deb
-mkdir -p /usr/local/share/images
+DIR=/usr/local/share/images
+mkdir -p $DIR/desktop-base
 chown root:root ITS*.jpg 10-openntpd
 chmod 444 ITS*.jpg login-background-2.jpg
-mv ITS*.jpg /usr/local/share/images/.
-mv login-background-2.jpg /usr/share/images/desktop-base/.
+mv ITS*.jpg $DIR/.
+mv login-background-2.jpg $DIR/desktop-base/.
 mv 10-openntpd /etc/NetworkManager/dispatcher.d/.
 
 # Set the background image used by lightdm at login time.
 ed /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf <<EOF
 /^background
-s,=.*$,=/usr/share/images/desktop-base/login-background-2.jpg,
+s,=.*\$,=$DIR/desktop-base/login-background-2.jpg,
 w
 q
 EOF
+
+# Make the ITS logo background be the default background for all new users.
+DIR1=/usr/share/images/desktop-base
+DIR2=/usr/local/share/images/desktop-base
+update-alternatives --install $DIR1/desktop-background desktop-background \
+    $DIR2/login-background-2.jpg 50
+update-alternatives --set desktop-background $DIR2/login-background-2.jpg
+
+# Add an admin user and allow them to use sudo
+cd /root
+adduser --disabled-password --shell /bin/bash --gecos 'Admin User' admin
+adduser admin sudo
+chpasswd -e < admin_password
 
 # Put the skeleton home directory stuff into /etc/skel
 cd /etc
@@ -48,12 +62,6 @@ chown -R root:root /etc/skel
 F=/etc/pulse/default.pa.d/60-unmute.pa
 echo set-sink-mute @DEFAULT_SINK@ 0 > $F
 echo set-sink-volume @DEFAULT_SINK@ 0x8000 >> $F
-
-# Add an admin user and allow them to use sudo
-cd /root
-adduser --disabled-password --shell /bin/bash --gecos 'Admin User' admin
-adduser admin sudo
-chpasswd -e < admin_password
 
 # Cleanup after ourselves
 cd /root

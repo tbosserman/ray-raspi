@@ -1,7 +1,31 @@
-1. make_setup.sh
-2. Install the base debian with absolutely NOTHING!
-3. Reboot and login as root
-4. Somehow get setup.sh onto that debian install. Maybe USB stick?
-   I installed openssh-client and krb5-user so I could scp it.
-5. Reboot, login as root, and start adding users.
-6. Don't forget to configure noip2 (noip2 -c)
+Release Notes
+-------------
+
+2024/08/15
+----------
+Major update to the automated install process:
+1. Uses update-alternatives to make the ITS-logo backgground the default
+   background image for all newly created users.
+2. Greatly reduced the number of files put into /etc/skel. I figured out how
+   to do the "minimum required change" to achieve "maximum desired result".
+----------
+1. Run "make". This will create:
+   - skeleton.tar.gz: This goes into /etc/skel at OS install time.
+   - setup.sh: The original one you have to run by hand.
+   - setup-auto.sh: The one that gets used by automated install.
+2. Put preseed.cfg and setup-auto.sh on your web server where they can be found
+   at http://<domain>/d-i/bookworm
+3. When installing Debian, choose "Advanced Options" and then
+   "Automated Install".
+4. After install, reboot, login as root (or admin) and start adding users.
+5. Don't forget to configure noip2 (noip2 -c)
+
+NOTES regarding setting default background:
+
+DIR=/usr/share/images/desktop-base
+update-alternatives --install $DIR/desktop-background desktop-background \
+    $DIR/login-background-2.jpg 50
+update-alternatives --set desktop-background $DIR/login-background-2.jpg
+
+Interactive way (will prompt you):
+update-alternatives --config desktop-background

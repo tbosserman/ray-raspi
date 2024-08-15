@@ -5,3 +5,4 @@ id_rsa*
 *.deb
 admin_password
 setup.sh
+setup-auto.sh
